@@ -1,0 +1,7 @@
+.idea
+.DS_Store
+
+# Ignore test files and directories
+/assets/files/*
+!/assets/files/test.txt
+
