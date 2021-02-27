@@ -7,7 +7,7 @@
     
     $files = scandir($dir, SCANDIR_SORT_ASCENDING);
     foreach($files as $key => $file) {
-        if($file == '.' || $file == '..'){
+        if($file == '.' || $file == '..' || $file == '.DS_Store'){
             unset($files[$key]);
         }
     }
@@ -70,6 +70,15 @@
             return '';
         }
     }
+
+    function routeAddDir() {
+        if (isset($_GET['route'])) {
+            return 'assets/adddir.php?route='. $_GET['route'];
+        }
+        else{
+            return 'assets/adddir.php';
+        }
+    }
 ?>
 
 <!DOCTYPE HTML>
@@ -97,19 +106,36 @@
 
 
 <div class="container">
-    <form action="<?= routeAdd() ?>" method="post" enctype="multipart/form-data" class="row g-3">
+    <div class="row">
         <div class="col-md-6">
-            <label for="fileToUpload" class="form-label">Vyberte súbor na vloženie</label>
-            <input type="file" name="fileToUpload" id="fileToUpload" class="form-control">
+            <form action="<?= routeAdd() ?>" method="post" enctype="multipart/form-data">
+                <div class="col-12" style="margin-bottom: 20px">
+                    <h4 class="text-center mb-4">Pridať súbor</h4>
+                    <label for="fileToUpload" class="form-label">Vyberte súbor na vloženie</label>
+                    <input type="file" name="fileToUpload" id="fileToUpload" class="form-control">
+                </div>
+                <div class="col-12" style="margin-bottom: 20px">
+                    <label for="fileName" class="form-label">Nový názov súboru (voliteľné)</label>
+                    <input type="text" name="fileName" id="fileName" class="form-control" placeholder="my-new-file-name">
+                </div>
+                <div class="col-12" style="margin-bottom: 20px">
+                    <button class="btn btn-primary w-100" type="submit">Pridať súbor</button>
+                </div>
+            </form>
         </div>
         <div class="col-md-6">
-            <label for="fileName" class="form-label">Nový názov súboru (voliteľné)</label>
-            <input type="text" name="fileName" id="fileName" class="form-control" placeholder="my-new-file-name">
+            <form action="<?= routeAddDir() ?>" method="post" enctype="multipart/form-data">
+                <div class="col-12" style="margin-bottom: 20px">
+                    <h4 class="text-center mb-4">Pridať priečinok</h4>
+                    <label for="dirName" class="form-label">Názov priečinku</label>
+                    <input type="text" name="dirName" id="dirName" class="form-control" placeholder="my-new-dir-name">
+                </div>
+                <div class="col-12">
+                    <button class="btn btn-primary w-100" type="submit">Pridať Priečinok</button>
+                </div>
+            </form>
         </div>
-        <div class="col-12">
-            <button class="btn btn-primary" type="submit">Pridať súbor</button>
-        </div>
-    </form>
+    </div>
 </div>
 
 
